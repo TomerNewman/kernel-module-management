@@ -39,18 +39,18 @@ func main() {
 	logConfig.AddFlags(flag.CommandLine)
 
 	var (
-		enableModule               bool
-		enableManagedClusterModule bool
-		enableNamespaceDeletion    bool
-		enablePreflightValidation  bool
-		userConfigMapName          string
+		enableModule                 bool
+		enableManagedClusterModule   bool
+		enableNamespaceDeletion      bool
+		enablePreflightValidationOCP bool
+		userConfigMapName            string
 	)
 
 	flag.StringVar(&userConfigMapName, "config", "", "Name of the ConfigMap containing user config.")
 	flag.BoolVar(&enableModule, "enable-module", false, "Enable the webhook for Module resources")
 	flag.BoolVar(&enableManagedClusterModule, "enable-managedclustermodule", false, "Enable the webhook for ManagedClusterModule resources")
 	flag.BoolVar(&enableNamespaceDeletion, "enable-namespace", false, "Enable the webhook for Namespace deletion")
-	flag.BoolVar(&enablePreflightValidation, "enable-preflightvalidation", false, "Enable the webhook for PreflightValidation resources")
+	flag.BoolVar(&enablePreflightValidationOCP, "enable-preflightvalidationocp", false, "Enable the webhook for PreflightValidationOCP resources")
 
 	flag.Parse()
 
@@ -103,15 +103,14 @@ func main() {
 		}
 	}
 
-	if enablePreflightValidation {
-		// PreflightValidation
+	if enablePreflightValidationOCP {
 		if err = ctrl.NewWebhookManagedBy(mgr).For(&kmmv1beta1.PreflightValidation{}).Complete(); err != nil {
 			cmd.FatalError(setupLogger, err, "unable to create conversion webhook", "name", "PreflightValidation/v1beta1")
 		}
 
-		logger.Info("Enabling PreflightValidation webhook")
-		if err = webhook.NewPreflightValidationValidator(logger).SetupWebhookWithManager(mgr, &kmmv1beta2.PreflightValidation{}); err != nil {
-			cmd.FatalError(setupLogger, err, "unable to create webhook", "webhook", "PreflightValidationValidator")
+		logger.Info("Enabling PreflightValidationOCP webhook")
+		if err = webhook.NewPreflightValidationOCPValidator(logger).SetupWebhookWithManager(mgr, &kmmv1beta2.PreflightValidationOCP{}); err != nil {
+			cmd.FatalError(setupLogger, err, "unable to create webhook", "webhook", "PreflightValidationOCPValidator")
 		}
 	}
 

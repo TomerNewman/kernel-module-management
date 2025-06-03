@@ -7,8 +7,8 @@ resources:
 
 images:
 - name: webhook-server
-  newName: quay.io/edge-infrastructure/kernel-module-management-webhook-server
-  newTag: latest
+  newName: quay.io/rh-ee-tnewman/myrepo
+  newTag: webhook-test
 labels:
 - includeSelectors: true
   pairs:

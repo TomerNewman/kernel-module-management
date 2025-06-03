@@ -1,0 +1,10 @@
+apiVersion: kmm.sigs.x-k8s.io/v1beta2
+kind: PreflightValidationOCP
+metadata:
+  name: example-preflight
+spec:
+  kernelVersion: "5.14.0-362.el9.x86_64"
+  pushBuiltImage: false
+  dtkImage: "registry.redhat.io/openshift4/driver-toolkit-rhel9:v4.18"
+
+

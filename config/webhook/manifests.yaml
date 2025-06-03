@@ -49,9 +49,9 @@ webhooks:
     service:
       name: webhook-service
       namespace: system
-      path: /validate-kmm-sigs-x-k8s-io-v1beta2-preflightvalidation
+      path: /validate-kmm-sigs-x-k8s-io-v1beta2-preflightvalidationsocp
   failurePolicy: Fail
-  name: vpreflightvalidation.kb.io
+  name: vpreflightvalidationocp.kb.io
   rules:
   - apiGroups:
     - kmm.sigs.x-k8s.io
@@ -61,5 +61,5 @@ webhooks:
     - CREATE
     - UPDATE
     resources:
-    - preflightvalidations
+    - preflightvalidationsocp
   sideEffects: None
